@@ -8,5 +8,7 @@ const httpLink = new HttpLink({
 
 const client = new ApolloClient({
   link: httpLink,
-  cahe: new InMemoryCache()
+  cahe: new InMemoryCache(),
 })
+
+export default client
