@@ -33,6 +33,9 @@ class TodoList extends Component {
         value={this.state.newTodoText}
         onChange={e => this.setState({newTodoText: e.target.value})}
         />
+        <input type="submit"
+        value="Criar"
+        onClick={this.addTodo}/>
         </Fragment>
       );
   }
