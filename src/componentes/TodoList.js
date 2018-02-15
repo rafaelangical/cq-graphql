@@ -1,5 +1,5 @@
 import React,{ Component, Fragment } from 'react'
-import { graphql } from 'react-apollo'
+import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
 class TodoList extends Component {
