@@ -9,9 +9,9 @@ class TodoList extends Component {
     this.state = {
       newTodoText: ''
     }
+    
+  };
 
-    this.renderTodoList.bind(this)
-  }
   renderTodoList = () => (
     <ul>
       { this.props.todos.allTodoes.map(todo => (
@@ -20,23 +20,30 @@ class TodoList extends Component {
     </ul>
   );
 
+  addTodo = () => {
+    const { newTodoText } = this.state;
+
+    this.props.addTodo({
+      variables: { text: newTodoText},
+      update: (proxy, { data: { createTodo }}) =>{
+        this.props.todos.refetch();
+      },
+    })
+  };
+
   render(){
 
     const { todos } = this.props;
 
     return(
       <Fragment>
-      { todos.loading 
-        ? <p>Carregando...</p>
-        : this.renderTodoList() }
-        <input type="text" 
-        value={this.state.newTodoText}
-        onChange={e => this.setState({newTodoText: e.target.value})}
-        />
-        <input type="submit"
-        value="Criar"
-        onClick={this.addTodo}/>
-        </Fragment>
+        { todos.loading 
+          ? <p>Carregando...</p>
+          : this.renderTodoList() 
+        }
+        <input type="text" value={this.state.newTodoText} onChange={e => this.setState({newTodoText: e.target.value})} />
+        <input type="submit" value="Criar" onClick={this.addTodo} />
+      </Fragment>
       );
   }
 }
@@ -46,8 +53,22 @@ const TodosQuery = gql`
     allTodoes{
       id
       text
+      completed
     }
   }
 `;
 
-export default graphql(TodosQuery, { name: 'todos' })(TodoList);
+const TodoMutation = gql`
+  mutation ($text: String!){
+    createTodo ( text: $text) {
+      id
+      text
+      completed
+    }
+  }
+`;
+
+export default compose(
+  graphql(TodosQuery, { name: 'todos' }),
+  graphql(TodoMutation, {name: 'addTodo' }),
+)(TodoList);
