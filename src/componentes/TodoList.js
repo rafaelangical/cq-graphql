@@ -3,7 +3,15 @@ import { graphql, compose } from 'react-apollo'
 import gql from 'graphql-tag'
 
 class TodoList extends Component {
+  
+  constructor(props){
+    super(props)
+    this.state = {
+      newTodoText: ''
+    }
 
+    this.renderTodoList.bind(this)
+  }
   renderTodoList = () => (
     <ul>
       { this.props.todos.allTodoes.map(todo => (
@@ -25,7 +33,6 @@ class TodoList extends Component {
         value={this.state.newTodoText}
         onChange={e => this.setState({newTodoText: e.target.value})}
         />
-        
         </Fragment>
       );
   }
