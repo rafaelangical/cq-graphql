@@ -21,6 +21,11 @@ class TodoList extends Component {
       { todos.loading 
         ? <p>Carregando...</p>
         : this.renderTodoList() }
+        <input type="text" 
+        value={this.state.newTodoText}
+        onChange={e => this.setState({newTodoText: e.target.value})}
+        />
+        
         </Fragment>
       );
   }
