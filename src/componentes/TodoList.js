@@ -9,14 +9,15 @@ class TodoList extends Component {
     this.state = {
       newTodoText: ''
     }
-    
+    this.renderTodoList.bind(this)
   };
 
   renderTodoList = () => (
+    console.log(this.props)
     <ul>
-      { this.props.todos.allTodoes.map(todo => (
+      {this.props.todos.allTodoes.map(todo => 
         <li key={todo.id}>{ todo.text}</li>  
-      )) }
+      )}
     </ul>
   );
 
